@@ -11,6 +11,7 @@ bool Board::init()
 {
     mino_cnt_ = 0;
     width = 0;
+    r = rand() % 10 + 1;
     // ‚·‚×‚Ä‚Ì—v‘f‚ğ-1‚Å‰Šú‰»
     for( int i = 0; i < kBoardHeight; ++i )
     {

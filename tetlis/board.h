@@ -53,6 +53,7 @@ private:
     int board_[ kBoardHeight ][ kBoardWidth ]; // ƒQ[ƒ€ƒGƒŠƒA
     int mino_cnt_;
     int width;
+    int r;
 public:
     bool init(); // ‰Šú‰»
     void draw(); // •`‰æ

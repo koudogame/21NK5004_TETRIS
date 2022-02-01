@@ -3,6 +3,7 @@
 #include "keyboard.h"
 
 
+
 //*****************************************************************************
 //  Constant
 //*****************************************************************************
@@ -18,6 +19,16 @@ constexpr int kFallSpeed = 6;      // 落下速度
 //*****************************************************************************
 Mino::Mino() : x_( 4 ), y_( 0 ), texture_( 0 ), fall_counter_( 0 )
 {
+    for( int i = 0; i < 4; i++ )
+    {
+        for( int j = 0; j < 4; j++ )
+        {
+            Tetris_[ i ][ j ] = 0;
+        }
+    }
+    tetris_color_ = 0;
+
+    rand_ = 0;
 
 }
 
@@ -43,6 +54,15 @@ bool Mino::init()
         // エラー
         return false;
     }
+    for( int i = 0; i < 4; i++ )
+    {
+        for( int j = 0; j < 4; j++ )
+        {
+            Tetris_[ i ][ j ] = 0;
+        }
+    }
+
+    tetris_color_ = 0;
 
     return true;
 }
@@ -56,16 +76,62 @@ bool Mino::update( Board* pBoard )
     // 入力取得
     unsigned int pressed_key = Keyboard::getPressed();
 
+    if( y_ == 0 ) {
+
+        rand_ = GetRand( 6 );
+    }
+
+    if( rand_ == 0 )
+    {
+        tetris_color_ = rand_;
+    }
+
+    else if( rand_ == 1 )
+    {
+        tetris_color_ = rand_;
+    }
+
+    else if( rand_ == 2)
+    {
+        tetris_color_ = rand_;
+    }
+    
+    else if( rand_ == 3 )
+    {
+        tetris_color_ = rand_;
+    }
+   
+    else if( rand_ == 4 )
+    {
+        tetris_color_ = rand_;
+    } 
+  
+    else if( rand_ == 5 )
+    {
+        tetris_color_ = rand_;
+    } 
+ 
+    else if( rand_ == 6 )
+    {
+        tetris_color_ = rand_;
+    }
+
     // 下左右移動
     if( pressed_key & kRightArrow )
     {
         ++x_;
-        if( x_ > kBlockWidthNum - 1 ) x_ = kBlockWidthNum - 1;
+        if( x_ > kBlockWidthNum - 1 )
+        {
+            x_ = kBlockWidthNum - 1;
+
+        }
     }
     else if( pressed_key & kLeftArrow )
     {
         --x_;
-        if( x_ < 0 ) x_ = 0;
+        if( x_ < 0 ) {
+            x_ = 0;
+        }
     }
     else if( pressed_key & kDownArrow )
     {
@@ -84,7 +150,7 @@ bool Mino::update( Board* pBoard )
         {
             // ブロックを書き込む(下げる前の位置)
             // 第三引数で渡す列挙値を変えれば自動的に描画範囲を計算するようにしている
-            pBoard->setMass( x_, y_ - 1, kLightBlue );
+            pBoard->setMass( x_, y_ - 1, tetris_color_ );
 
             x_ = 4; // ブロック位置を中央付近にする
             y_ = 0; // 一番上へ
@@ -94,7 +160,7 @@ bool Mino::update( Board* pBoard )
         if( pBoard->getMass( x_, y_ ) != -1 )
         {
             // ブロックを書き込む(下げる前の位置)
-            pBoard->setMass( x_, y_ - 1, kLightBlue );
+            pBoard->setMass( x_, y_ - 1, tetris_color_ );
 
             x_ = 4; // ブロック位置を中央付近にする
             y_ = 0; // 一番上へ
@@ -117,7 +183,7 @@ void Mino::draw()
     DrawRectGraph(
         kReferencePointX + (x_ * kMinoSize),
         kReferencePointY + (y_ * kMinoSize),
-        kSrcX, kSrcY, kMinoSize, kMinoSize, texture_, true );
+        kSrcX+(tetris_color_*kMinoSize), kSrcY, kMinoSize, kMinoSize, texture_, true );
 }
 
 
