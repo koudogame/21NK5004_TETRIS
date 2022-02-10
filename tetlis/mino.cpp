@@ -1,6 +1,7 @@
 #include "mino.h"
 #include "Common.h"
 #include "keyboard.h"
+#include "mino_shape_.h"
 
 
 
@@ -19,14 +20,14 @@ constexpr int kFallSpeed = 6;      // 落下速度
 //*****************************************************************************
 Mino::Mino() : x_( 4 ), y_( 0 ), texture_( 0 ), fall_counter_( 0 )
 {
-    for( int i = 0; i < 4; i++ )
+    for(  i = 0; i < 4; i++ )
     {
-        for( int j = 0; j < 4; j++ )
+        for(  j = 0; j < 4; j++ )
         {
             Tetris_[ i ][ j ] = 0;
         }
     }
-    tetris_color_ = 0;
+    tetris_color_ = -1;//テトリスカラー
 
     rand_ = 0;
 
@@ -54,15 +55,15 @@ bool Mino::init()
         // エラー
         return false;
     }
-    for( int i = 0; i < 4; i++ )
+    for( i = 0; i < 4; i++ )
     {
-        for( int j = 0; j < 4; j++ )
+        for( j = 0; j < 4; j++ )
         {
             Tetris_[ i ][ j ] = 0;
         }
     }
 
-    tetris_color_ = 0;
+    tetris_color_ = -1;//テトリスカラー
 
     return true;
 }
@@ -78,48 +79,24 @@ bool Mino::update( Board* pBoard )
 
     if( y_ == 0 ) {
 
-        rand_ = GetRand( 6 );
-    }
+        tetris_color_ = GetRand( 7 );
 
-    if( rand_ == 0 )
-    {
-        tetris_color_ = rand_;
-    }
-
-    else if( rand_ == 1 )
-    {
-        tetris_color_ = rand_;
-    }
-
-    else if( rand_ == 2)
-    {
-        tetris_color_ = rand_;
     }
     
-    else if( rand_ == 3 )
+
+    for( int i = 0; i < 4; i++ )
     {
-        tetris_color_ = rand_;
-    }
-   
-    else if( rand_ == 4 )
-    {
-        tetris_color_ = rand_;
-    } 
-  
-    else if( rand_ == 5 )
-    {
-        tetris_color_ = rand_;
-    } 
- 
-    else if( rand_ == 6 )
-    {
-        tetris_color_ = rand_;
+        for( int j = 0; j < 4; j++ )
+        {
+            Tetris_[ i ][ j ] = tetris_mino_shape[ tetris_color_ ].tetris_shape[ i ][ j ];
+        }
     }
 
     // 下左右移動
     if( pressed_key & kRightArrow )
     {
         ++x_;
+
         if( x_ > kBlockWidthNum - 1 )
         {
             x_ = kBlockWidthNum - 1;
@@ -180,10 +157,22 @@ void Mino::draw()
     // ミノの描画(今回は水色のみにしている）
     // データは添え字で管理して描画座標は計算で求める
     // (ミノの添え字番号は後々使えるところが多い）
-    DrawRectGraph(
-        kReferencePointX + (x_ * kMinoSize),
-        kReferencePointY + (y_ * kMinoSize),
-        kSrcX+(tetris_color_*kMinoSize), kSrcY, kMinoSize, kMinoSize, texture_, true );
+
+    for( i = 0; i < 4; i++ )
+    {
+        for( j = 0; j < 4; j++ )
+        {
+            if( Tetris_[ i ][ j ] > 0 )
+            {
+                DrawRectGraph(
+                    kReferencePointX + (x_ * kMinoSize) + (j * kMinoSize),
+                    kReferencePointY + (y_ * kMinoSize) + (i * kMinoSize),
+                    kSrcX + (tetris_color_ * kMinoSize), kSrcY, kMinoSize, kMinoSize, texture_, true );
+            }
+   
+        }
+    }
+    
 }
 
 

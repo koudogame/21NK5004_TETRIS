@@ -19,8 +19,11 @@ private:
     int texture_;      // グラフィックハンドル
     int fall_counter_; // 落下カウンター
     int Tetris_[ 4 ][ 4 ];
-    int tetris_color_;
+    int tetris_color_;//テトリスカラー（randの受け取り）
     int rand_;
+    int tetris_shape_;
+    int i ;
+    int j ;
 
 public:
     Mino();        // コンストラクタ

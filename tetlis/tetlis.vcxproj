@@ -161,6 +161,7 @@
     <ClInclude Include="game.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="mino.h" />
+    <ClInclude Include="mino_shape_.h" />
     <ClInclude Include="progress.h" />
     <ClInclude Include="title.h" />
   </ItemGroup>

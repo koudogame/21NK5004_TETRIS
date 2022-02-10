@@ -86,5 +86,8 @@
     <ClInclude Include="progress.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="mino_shape_.h">
+      <Filter>ソース ファイル\mino</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
